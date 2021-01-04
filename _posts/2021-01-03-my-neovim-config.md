@@ -56,7 +56,6 @@ features which make Golang development fun and easy!
 " ================= looks and GUI stuff ================== "
 
 Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'ryanoasis/vim-devicons'
 Plug 'sainnhe/gruvbox-material'
 
@@ -108,7 +107,6 @@ tweaks which help when using macros, such as `set lazyredraw`.
 
 set termguicolors                                       " Opaque Background
 set mouse=a                                             " enable mouse scrolling
-set clipboard+=unnamedplus                              " use system clipboard by default
 set tabstop=2 softtabstop=2 shiftwidth=2 autoindent     " tab width
 set expandtab smarttab                                  " tab key actions
 set incsearch ignorecase smartcase hlsearch             " highlight text while searching
@@ -184,7 +182,7 @@ let g:go_fmt_command = "goimports"
 ## Custom Mappings
 
 Obviously key bindings are quite personal and there is not right or wrong way to do it,
-but maybe you'll find some use seeing what I have come up with. I prefer to change my
+but maybe you'll find it useful to see what I have come up with. I prefer to change my
 `<leader>` key to `<space>` because it is under-utilized and in such a prime location.
 
 ```vim
@@ -195,28 +193,28 @@ let mapleader=' '
 nmap \ <leader>q
 map <F3> :Startify <CR>
 nmap <leader>r :so ~/.config/nvim/init.vim<CR>
-nmap <leader>q :bd<CR>    " quickly exit a buffer
-nmap <leader>\ :qa!<CR>   " quickly exit neovim without saving
+nmap <leader>q :bd<CR>
+nmap <leader>\ :qa!<CR>
 nmap <leader>w :w<CR>
 nmap <leader>z :Format<CR>
 nmap <Tab> :bnext<CR>
 nmap <S-Tab> :bprevious<CR>
 noremap <leader>e :PlugInstall<CR>
 noremap <C-q> :q<CR>
-map Y y$                  " make Y consistent with C and D
+map Y y$
 inoremap jk <ESC>
 cnoremap jk <ESC>
 nnoremap <leader>y +y
 nnoremap <leader>Y +Y
 nnoremap <leader>p +p
 
-" mapping to move lines up or down with alt+j / alt+k
+" remap move keys
 nmap <M-j> mz:m+<cr>`z
 nmap <M-k> mz:m-2<cr>`z
 vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
 vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
 
-" insert a new line in normal mode and return to cursor position
+" new line in normal mode and back
 noremap <leader>[ myO<ESC>`y
 noremap <leader>] myo<ESC>`y
 
@@ -230,23 +228,23 @@ noremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-" disable search highlighting with 2 esc
+" disable hl with 2 esc
 noremap <silent><esc> <esc>:noh<CR><esc>
 
-" trim white spaces on keypress
+" trim white spaces
 nnoremap <F2> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
 
 "" FZF
 nnoremap <silent> <leader>f :Files<CR>
 nmap <leader>b :Buffers<CR>
-nmap <leader>c :Commands<CR>
+nmap <leader>: :Commands<CR>
 nmap <leader>t :BTags<CR>
 nmap <leader>/ :Rg<CR>
 nmap <leader>gc :Commits<CR>
 nmap <leader>gs :GFiles?<CR>
 nmap <leader>sh :History/<CR>
 
-" show key mapping on all modes with F1
+" show mapping on all modes with F1
 nmap <F1> <plug>(fzf-maps-n)
 imap <F1> <plug>(fzf-maps-i)
 vmap <F1> <plug>(fzf-maps-x)
@@ -272,6 +270,18 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+nmap <leader>crf <Plug>(coc-refactor)
+nmap <leader>cfc <Plug>(coc-fix-current)
+
+" Map function and class text objects for selection
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
 
 " Use CTRL-S for selections ranges.
 nmap <silent> <C-s> <Plug>(coc-range-select)
@@ -280,7 +290,7 @@ xmap <silent> <C-s> <Plug>(coc-range-select)
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
-" symbol rename
+" other stuff
 nmap <leader>lrn <Plug>(coc-rename)
 nmap <leader>o :OR <CR>
 
@@ -289,6 +299,10 @@ nmap <leader>jd <Plug>(coc-definition)
 nmap <leader>jy <Plug>(coc-type-definition)
 nmap <leader>ji <Plug>(coc-implementation)
 nmap <leader>jr <Plug>(coc-references)
+
+" fugitive mappings
+nmap <leader>gd :Gdiffsplit<CR>
+nmap <leader>gb :Gblame<CR>
 
 " vim-go mappings
 nmap <leader>lt :GoTest<CR>
@@ -299,6 +313,9 @@ nmap <leader>lr :GoRun<CR>
 nmap <leader>li :GoImports<CR>
 nmap <leader>lfs :GoFillStruct<CR>
 nmap <leader>lie :GoIfErr<CR>
+
+" Open built in terminal
+nmap <leader>' :sp term://fish<CR>30<C-w>-<CR>i
 ```
 
 ## Full Configuration
