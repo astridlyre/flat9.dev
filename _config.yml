@@ -1,0 +1,17 @@
+title: flat9.dev
+email: eb@flat9.dev
+description: >- 
+  I am a Linux enthusiast and computer programmer. As self taught student
+  of the internet, this blog serves as a notebook for the things that I
+  have learned, and a place for me to work through my ideas on politics,
+  technology, and culture.
+baseurl: "/" # the subpath
+url: "https://flat9.dev" # the base hostname & protocol
+instagram_username: artsyidler
+github_username:  astridlyre
+
+# Build settings
+show_excerpts: true
+theme: minima
+plugins:
+  - jekyll-feed

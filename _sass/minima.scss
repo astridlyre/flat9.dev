@@ -1,0 +1,60 @@
+@charset "utf-8";
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&display=swap');
+// Define defaults for each variable.
+// Gruvbox color reference
+
+$yellow: #fabd2f;
+$orange: #fe8019;
+$red: #fb4934;
+$purple: #d3869b;
+$blue: #83a598;
+$aqua: #8ec07c;
+$green: #b8bb26;
+$grey: #928374;
+
+$text-color: #d5c4a1;
+$background-color: #282828;
+$code-background: $background-color;
+$code-def-color: $text-color;
+$brand-color: $purple;
+$pre-border-color: $background-color;
+
+$grey-color: $grey;
+$grey-color-light: darken($grey-color, 30%);
+$grey-color-dark: darken($grey-color, 25%);
+$base-font-family: 'Nunito', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
+	'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol' !default;
+$base-font-size: 18px !default;
+$base-font-weight: 400 !default;
+$small-font-size: $base-font-size * 0.875 !default;
+$base-line-height: 1.4 !default;
+
+$spacing-unit: 38px !default;
+
+$table-text-align: left !default;
+
+// Width of the content area
+$content-width: 900px !default;
+
+$on-palm: 600px !default;
+$on-laptop: 800px !default;
+
+// Use media queries like this:
+// @include media-query($on-palm) {
+//   .wrapper {
+//     padding-right: $spacing-unit / 2;
+//     padding-left: $spacing-unit / 2;
+//   }
+// }
+@mixin media-query($device) {
+	@media screen and (max-width: $device) {
+		@content;
+	}
+}
+
+@mixin relative-font-size($ratio) {
+	font-size: $base-font-size * $ratio;
+}
+
+// Import partials.
+@import 'minima/base', 'minima/layout', 'minima/syntax-highlighting';
