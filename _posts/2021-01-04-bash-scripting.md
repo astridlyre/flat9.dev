@@ -17,7 +17,7 @@ Simple commands are structured as follows: the values in square brackets
 are optional and are variable in number.
 
 ```bash
-# [ var#value ... ] name [ arg ... ] [ redirection ... ]
+# [ var=value ... ] name [ arg ... ] [ redirection ... ]
 ls -a
 # "ls" is the name, and "-a" is the arg
 ```
