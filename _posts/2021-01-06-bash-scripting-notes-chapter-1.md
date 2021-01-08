@@ -5,7 +5,7 @@ date: 2021-01-07
 categories: linux bash scripting
 ---
 
-## What is Bash?
+What is [Bash](https://en.wikipedia.org/wiki/Bash_(Unix_shell))?
 
 - Bash is a program designed to be easy to interact with, in a way such as giving it
   commands and performing certain tasks.
