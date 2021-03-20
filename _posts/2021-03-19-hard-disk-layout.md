@@ -81,8 +81,56 @@ a FAT-based filesystem. On a [GUID](https://en.wikipedia.org/wiki/Universally_un
 partition table it would have a GUID of `C12A7328-F81F-11D2-BA4B-00A0C93EC93B` and on an
 MBR partition scheme it would have a partition ID of `0xEF`. The ESP is mounted under `/boot/efi`.
 
-## Other Partitions
+## Swap Partition
 
-While most "normal" users on a Linux system have their own `/home/<user>` directory, the
-_superuser_ or _root_ account has its home in `/root`. Other accounts, such as system
-services, may not have a home directory.
+Another important type of partition is a system _swap_ partition. This special partition
+is used to swap [memory pages](https://en.wikipedia.org/wiki/Memory_paging) from RAM to
+disk as required during system operation. A swap partition must be formatted with the tool
+`mkswap` before it is ready to be enabled with `swapon`. Systems may have more than one
+swap partition, although this is uncommon. In addition, a _swap file_ can be used, which
+allows available swap space to be quickly increased as needed.
+
+As a general rule, here are the recommended sizes for a swap partition:
+
+| Amount of RAM | Recommended Swap Size | Recommended Size (with hibernation) |
+| ------------- | --------------------- | ----------------------------------- |
+| < 2 GB        | 2x the amount of RAM  | 3x the amount of RAM                |
+| 2-8 GB        | Equal to RAM          | 2x the amount of RAM                |
+| 8-64 GB       | At least 4 GB         | 1.5x the amount of RAM              |
+| > 64 GB       | At least 4 GB         | Not recommended                     |
+
+## Logical Volume Management
+
+One of the major drawbacks of traditional partitions is that the system administrator must
+decide beforehand how the available disk space will be distributed. _Logical Volume
+Management_ (LVM) can be implemented to overcome this limitation. LVM offers
+[virtualization](https://en.wikipedia.org/wiki/Virtualization) of storage, in a way that
+is more flexible than traditional partitioning. This serves to facilitate the management of
+the storage needs of end users.
+
+### Units of LVM
+
+There are several important terms when it comes to Logical Volume Management:
+
+- **Physical Volume** (PV): The block device on the system, such as a disk partition or
+  [RAID](https://en.wikipedia.org/wiki/RAID) setup.
+- **Volume Group** (VG): Serves to abstract and combine the storage capacity of the
+  underlying physical devices, and is seen as a single logical device
+- **Extents**: Subdivisions of a Volume Group, when on a Physical Volume is called a
+  _Physical Extent_ (PE) and when on a Logical Volume is called a _Logical Extent_ (LE).
+  Generally, each LE is mapped to a PE.
+- **Logical Volume** (LV): Similar to a traditional partition, but is a division of a
+  Volume Group instead of a physical storage device. The size of a Logical Volume is
+  defined by the size of the physical extents, multiplied by the number of extents on the
+  volume. Therefore, to **grow** a volume, **add more extents** and to **shrink** it,
+  **remove some extents**.
+
+A Logical Volume is seen as a normal block device by the operating system. It will have a
+`/dev` location, like `/dev/VG_NAME/LV_NAME`. Like a traditional partition, it can also be
+formatted with a filesystem using the standard utilities (like `mkfs.ext4`), mounted with
+`mount` and added to `/etc/fstab` for automounting.
+
+## Summary
+
+This article summarized a variety of information about storage devices on Linux, from hard
+disks to logical volumes, as well as offered an overview of boot and swap partitions.
