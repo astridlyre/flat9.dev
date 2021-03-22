@@ -110,9 +110,50 @@ menuentry "DefaultOS" {
 }
 ```
 
-Note: The first line always starts with `menuentry`. The entry label is in quotation
+The first line always starts with `menuentry`, and the entry label is in quotation
 marks. The command `set root` defines the disk and partition where the root filesystem is
 located. In GRUB, disks are numbered from 0, while partitions are numbered from 1. Instead
 of specifying the device, it is possible to use a label or UUID like `search --set-root --label LABEL`
 or `seach --set-root --fd-uuid UUID`. To find the UUID of a disk, use `ls -l /dev/disk/by-uuid/`.
 When using `search`, newer systems can add `--no-floppy` to avoid wasting time searching floppy disks.
+
+### Interacting with GRUB
+
+During boot, press `Shift` or `Esc` to bring up the GRUB menu. To exit a menu entry,
+select the entry and press `e`. The contents of the `menuentry` associated with that
+option will then become editable. After making changing, to boot with the new options
+press `Ctrl+x` or `F10`. To return to the menu, press `Esc`.
+
+GRUB also offers an interactive shell, which can be accessed using `c` at the menu,
+or `Ctrl+c` while editing a `menuentry`. This interactive shell can be useful in case of
+troubleshooting a misconfiguration. The shell enables booting the system after following
+these steps:
+
+1. Find out where the boot partition is with `ls` (shows list of the partitions).
+2. Check the contents of boot partition to find the kernel and the initial RAM disk using
+   the command `ls (hd0,msdos1)/`, or use the `-l` option for a long listing.
+3. Set the boot partition with `set root=(hd0,msdos1)`.
+4. Load the Linux kernel with `linux /vmlinuz root=/dev/sda1` (or whichever device it is).
+5. Load the initial RAM disk with `initrd /initrd.img`.
+6. Finally, try to boot the system with `boot`.
+
+Note: The above commands closely resemble the steps for making a menu entry file in
+`/etc/grub.d/`.
+
+### The Rescue Shell
+
+Similar to GRUB's interactive shell, the rescue shell is a simplified version and requires
+almost the same steps as above to boot a machine, but some modules must be loaded first:
+
+1. After finding the boot partition, specify the directory containing the GRUB2 files,
+   using the command `set prefix=(hd0,msdos1)/boot/grub`.
+2. Then, load the modules `normal` and `linux` using `insmod normal` and `insmod linux`.
+3. Then proceed to set the boot partition, load the kernel, load the initrd and attempt to
+   boot the system as above.
+
+## Summary
+
+The _Grand Unified Boot Loader_ (GRUB) is the ubiquitous boot manager on modern Linux
+systems. When a system is working well, most people never have to worry about the boot
+loader, but it is important to know some of the features GRUB provides, especially if the
+need to troubleshoot a system arises.
